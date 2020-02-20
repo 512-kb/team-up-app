@@ -1,12 +1,18 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import { Router } from "react-router-dom";
 import App from "./components/App";
+import history from "./history";
 
 class Index extends React.Component {
   state = {};
 
   render() {
-    return <App />;
+    return (
+      <Router history={history}>
+        <App />
+      </Router>
+    );
   }
 }
 
