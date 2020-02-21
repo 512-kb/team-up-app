@@ -2,18 +2,26 @@ import React from "react";
 import { Dimmer, Loader, Image, Segment } from "semantic-ui-react";
 
 class User extends React.Component {
-  loader = () => {
-    return (
+  state = {};
+  componentDidMount = () => {
+    this.setState(this.props.location.state);
+  };
+
+  render = () => {
+    return this.state.username ? (
+      <React.Fragment>
+        USERNAME:{" " + this.state.username}
+        <br />
+        REGION:{" " + this.state.region}
+      </React.Fragment>
+    ) : (
       <Segment>
         <Dimmer active>
           <Loader content="Loading" />
         </Dimmer>
-        <Image src="https://react.semantic-ui.com/images/wireframe/short-paragraph.png" />
+        <Image src="../../../public/images/loader.png" />
       </Segment>
     );
-  };
-  render = () => {
-    return <React.Fragment>USER HERE</React.Fragment>;
   };
 }
 
