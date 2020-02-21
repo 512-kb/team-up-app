@@ -1,26 +1,22 @@
 import React from "react";
-import { Dimmer, Loader, Image, Segment } from "semantic-ui-react";
+import { Dimmer, Loader } from "semantic-ui-react";
+import Header from "./header";
 
 class User extends React.Component {
   state = {};
-  componentDidMount = () => {
+  componentDidMount = setTimeout(() => {
     this.setState(this.props.location.state);
-  };
+  }, 900);
 
   render = () => {
     return this.state.username ? (
       <React.Fragment>
-        USERNAME:{" " + this.state.username}
-        <br />
-        REGION:{" " + this.state.region}
+        <Header username={this.state.username} />
       </React.Fragment>
     ) : (
-      <Segment>
-        <Dimmer active>
-          <Loader content="Loading" />
-        </Dimmer>
-        <Image src="../../../public/images/loader.png" />
-      </Segment>
+      <Dimmer active inverted>
+        <Loader content="Loading" />
+      </Dimmer>
     );
   };
 }

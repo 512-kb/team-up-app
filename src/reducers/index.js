@@ -1,15 +1,20 @@
 import { combineReducers } from "redux";
 
-const loginReducer = (user = "NO_USER", action) => {
+const loginReducer = (user = { _id: false }, action) => {
   if (action.type === "LOGIN_USER") {
-    if (action.payload.user === "NOT_FOUND") action.payload.callback.fail();
-    else action.payload.callback.success(action.payload.user);
-    return action.payload.user;
+    return action.payload;
   }
+  return user;
+};
 
+const registerReducer = (user = { _id: false }, action) => {
+  if (action.type === "REGISTER_USER") {
+    return action.payload;
+  }
   return user;
 };
 
 export default combineReducers({
-  user: loginReducer
+  user: loginReducer,
+  registeredUser: registerReducer
 });

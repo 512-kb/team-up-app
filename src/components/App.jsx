@@ -7,7 +7,6 @@ export default class App extends React.Component {
   render = () => {
     return (
       <div style={{ padding: "2%" }}>
-        <br />
         <Router history={history}>
           <Routes />
         </Router>

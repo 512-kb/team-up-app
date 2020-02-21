@@ -1,5 +1,5 @@
 import React from "react";
-import { Form, Button } from "semantic-ui-react";
+import { Form } from "semantic-ui-react";
 import { connect } from "react-redux";
 import { loginUser } from "../action creators";
 import history from "../history";
@@ -8,21 +8,13 @@ class Login extends React.Component {
   state = {
     username: "",
     password: "",
-    requestSent: false,
     error: { username: false, password: false }
   };
 
-  callBackForSuccess = data => {
-    this.setState({ requestSent: false });
-    history.push("/user", data);
+  componentDidMount = () => {
+    if (sessionStorage.getItem("user"))
+      history.push("/user", JSON.parse(sessionStorage.getItem("user")));
   };
-
-  callBackForFail = () => {
-    this.setState({ requestSent: false });
-    alert("Invalid Credentials");
-  };
-
-  handleChange = (e, { name, value }) => this.setState({ [name]: value });
 
   validate = formValues => {
     let error = { username: false, password: false };
@@ -34,79 +26,67 @@ class Login extends React.Component {
   };
 
   onSubmit = () => {
-    this.setState({ requestSent: true });
     const formValues = {
       username: this.state.username,
       password: this.state.password
     };
     if (this.validate(formValues)) {
-      this.props.loginUser({
-        formValues,
-        callback: {
-          success: this.callBackForSuccess,
-          fail: this.callBackForFail
-        }
-      });
-    } else this.setState({ requestSent: false });
+      this.props.loginUser(formValues);
+    }
   };
-  render() {
+
+  handleChange = (e, input) => {
+    return this.setState({ [input.name]: input.value });
+  };
+
+  render = () => {
     return (
       <Form>
         <Form.Group>
-          {this.state.error.username ? (
-            <Form.Input
-              label="Username"
-              placeholder="Username"
-              name="username"
-              autoComplete="off"
-              onChange={this.handleChange}
-              error={{ content: "Enter Username", pointing: "below" }}
-            />
-          ) : (
-            <Form.Input
-              label="Username"
-              placeholder="Username"
-              name="username"
-              autoComplete="off"
-              onChange={this.handleChange}
-            />
-          )}
+          <Form.Input
+            label="Username"
+            placeholder="Username"
+            name="username"
+            autoComplete="off"
+            onChange={this.handleChange}
+            error={
+              this.state.error.username ? this.state.error.username : undefined
+            }
+          />
         </Form.Group>
         <Form.Group>
-          {this.state.error.password ? (
-            <Form.Input
-              label="Password"
-              placeholder="Password"
-              type="password"
-              name="password"
-              autoComplete="off"
-              onChange={this.handleChange}
-              error={{ content: "Enter Password", pointing: "below" }}
-            />
-          ) : (
-            <Form.Input
-              label="Password"
-              placeholder="Password"
-              type="password"
-              name="password"
-              autoComplete="off"
-              onChange={this.handleChange}
-            />
-          )}
+          <Form.Input
+            label="Password"
+            placeholder="Password"
+            type="password"
+            name="password"
+            autoComplete="off"
+            onChange={this.handleChange}
+            error={
+              this.state.error.password ? this.state.error.password : undefined
+            }
+          />
         </Form.Group>
         <br />
-        {this.state.requestSent ? (
-          <Button loading primary>
-            Loading
-          </Button>
-        ) : (
-          <Button color="blue" onClick={this.onSubmit}>
-            Login
-          </Button>
-        )}
+        <Form.Button onClick={this.onSubmit} color="blue">
+          Login
+        </Form.Button>
       </Form>
     );
-  }
+  };
 }
 
-export default connect(state => state, { loginUser })(Login);
+const mapStateToProps = ({ user }) => {
+  if (user._id) {
+    sessionStorage.setItem("user", JSON.stringify(user));
+    history.push("/user", user);
+    return {};
+  }
+  if (user.msg) {
+    alert(user.msg);
+    return {};
+  }
+  return user;
+};
+
+export default connect(mapStateToProps, { loginUser })(Login);
