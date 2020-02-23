@@ -165,6 +165,10 @@ const mapStateToProps = ({ registeredUser }) => {
     sessionStorage.setItem("user", JSON.stringify(registeredUser));
     history.push("/user", registeredUser);
   }
+  if (registeredUser.msg) {
+    alert(registeredUser.msg);
+    return {};
+  }
   return registeredUser;
 };
 
