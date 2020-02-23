@@ -1,12 +1,19 @@
 import React from "react";
 import { Dimmer, Loader } from "semantic-ui-react";
+import socket from "../../sockets";
 import Header from "./header";
 
 class User extends React.Component {
   state = {};
-  componentDidMount = setTimeout(() => {
-    this.setState(this.props.location.state);
-  }, 900);
+  componentDidMount = () => {
+    setTimeout(() => {
+      this.setState(this.props.location.state);
+      socket.emit("connected", this.state.username);
+    }, 800);
+  };
+  componentWillUnmount = () => {
+    socket.emit("disconnected", this.state.username);
+  };
 
   render = () => {
     return this.state.username ? (

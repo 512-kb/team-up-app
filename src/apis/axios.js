@@ -4,7 +4,7 @@ import axios from "axios";
 const apiURL = "https://demo-api.herokuapp.com";
 // eslint-disable-next-line
 const localURL =
-  window.location.protocol + "//" + window.location.hostname + ":" + 4000;
+  window.location.protocol + "//" + window.location.hostname + ":" + 3001;
 
 const URL = window.location.hostname === "localhost" ? localURL : apiURL;
 console.log(URL);
