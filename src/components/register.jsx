@@ -161,7 +161,7 @@ class Register extends React.Component {
 }
 
 const mapStateToProps = ({ registeredUser }) => {
-  if (registeredUser._id) {
+  if (registeredUser.username) {
     sessionStorage.setItem("user", JSON.stringify(registeredUser));
     history.push("/user", registeredUser);
   }
