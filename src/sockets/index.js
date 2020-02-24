@@ -1,6 +1,14 @@
 import openSocket from "socket.io-client";
 
-const socket = openSocket("http://localhost:3002");
+// eslint-disable-next-line
+const apiURL = "https://demo-api.herokuapp.com";
+// eslint-disable-next-line
+const localURL =
+  window.location.protocol + "//" + window.location.hostname + ":" + 3002;
+
+const socket = openSocket(
+  window.location.hostname === "localhost" ? localURL : apiURL
+);
 
 socket.on("sockets on", id => {
   console.log("connection: " + id);
