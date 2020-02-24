@@ -14,11 +14,6 @@ class Register extends React.Component {
     error: { email: false, region: false, username: false, password: false }
   };
 
-  componentDidMount = () => {
-    if (sessionStorage.getItem("user"))
-      history.push("/user", JSON.parse(sessionStorage.getItem("user")));
-  };
-
   handleChange = (e, { name, value }) => this.setState({ [name]: value });
 
   emailValidator = email => {
@@ -160,8 +155,11 @@ class Register extends React.Component {
   };
 }
 
-const mapStateToProps = ({ registeredUser }) => {
-  if (registeredUser.username) {
+const mapStateToProps = ({ user, registeredUser }) => {
+  if (user.userAlreadyLoggedIn) {
+    history.push("/user", user.userAlreadyLoggedIn);
+    return user.userAlreadyLoggedIn;
+  } else if (registeredUser.username) {
     sessionStorage.setItem("user", JSON.stringify(registeredUser));
     history.push("/user", registeredUser);
   }

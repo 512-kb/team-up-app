@@ -11,11 +11,6 @@ class Login extends React.Component {
     error: { username: false, password: false }
   };
 
-  componentDidMount = () => {
-    if (sessionStorage.getItem("user"))
-      history.push("/user", JSON.parse(sessionStorage.getItem("user")));
-  };
-
   validate = formValues => {
     let error = { username: false, password: false };
     if (!formValues.username) error.username = "Enter the username";
@@ -80,11 +75,9 @@ const mapStateToProps = ({ user }) => {
   if (user.username) {
     sessionStorage.setItem("user", JSON.stringify(user));
     history.push("/user", user);
-    return user;
   }
   if (user.msg) {
     alert(user.msg);
-    return {};
   }
   return user;
 };
