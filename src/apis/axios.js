@@ -7,7 +7,6 @@ const localURL =
   window.location.protocol + "//" + window.location.hostname + ":" + 3001;
 
 const URL = window.location.hostname === "localhost" ? localURL : apiURL;
-console.log(URL);
 
 export default axios.create({
   baseURL: URL
