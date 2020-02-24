@@ -17,7 +17,7 @@ class User extends React.Component {
       }
       this.props.loadUserData(user.username);
       this.props.loadTop5();
-      socket.emit("connected", user.username + "connected");
+      socket.emit("connected", user.username + " connected");
     }, 800);
   };
   componentWillUnmount = () => {
