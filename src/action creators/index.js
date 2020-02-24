@@ -17,9 +17,14 @@ export const loadUserData = username => async dispatch => {
     .data;
   const invites = (await axios.get("/invitations", { params: { username } }))
     .data;
+  const posts = (
+    await axios.get("/posts", {
+      params: { username, channel_id: channels[0]._id }
+    })
+  ).data;
   dispatch({
     type: "LOAD_USER_DATA",
-    payload: { channels, invites }
+    payload: { channels, invites, posts }
   });
 };
 
