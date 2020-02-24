@@ -74,7 +74,7 @@ class Login extends React.Component {
 const mapStateToProps = ({ user }) => {
   if (user.username) {
     sessionStorage.setItem("user", JSON.stringify(user));
-    history.push("/user", user);
+    history.push("/user");
   }
   if (user.msg) {
     alert(user.msg);

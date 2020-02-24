@@ -7,16 +7,16 @@ const loginReducer = (user = { username: false }, action) => {
   if (action.type === "LOGIN_USER") {
     return action.payload;
   }
+  if (action.type === "REGISTER_USER") {
+    return action.payload;
+  }
   return user;
 };
-
-const registerReducer = (user = { username: false }, action) =>
-  action.type === "REGISTER_USER" ? action.payload : user;
 
 const userDataReducer = (userData = {}, action) =>
   action.type === "LOAD_USER_DATA" ? action.payload : userData;
 
-const top5Reducer = (top5 = [], action) => {
+const top5Reducer = (top5 = false, action) => {
   if (action.type === "FETCH_TOP5") {
     return action.payload;
   }
@@ -25,7 +25,6 @@ const top5Reducer = (top5 = [], action) => {
 
 export default combineReducers({
   user: loginReducer,
-  registeredUser: registerReducer,
   userData: userDataReducer,
   top5: top5Reducer
 });

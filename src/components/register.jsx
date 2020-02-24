@@ -155,19 +155,15 @@ class Register extends React.Component {
   };
 }
 
-const mapStateToProps = ({ user, registeredUser }) => {
-  if (user.userAlreadyLoggedIn) {
-    history.push("/user", user.userAlreadyLoggedIn);
-    return user.userAlreadyLoggedIn;
-  } else if (registeredUser.username) {
-    sessionStorage.setItem("user", JSON.stringify(registeredUser));
-    history.push("/user", registeredUser);
+const mapStateToProps = ({ user }) => {
+  if (user.username) {
+    sessionStorage.setItem("user", JSON.stringify(user));
+    history.push("/user");
   }
-  if (registeredUser.msg) {
-    alert(registeredUser.msg);
-    return {};
+  if (user.msg) {
+    alert(user.msg);
   }
-  return registeredUser;
+  return user;
 };
 
 export default connect(mapStateToProps, { registerUser })(Register);

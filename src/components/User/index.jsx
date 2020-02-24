@@ -4,25 +4,30 @@ import { connect } from "react-redux";
 import { loadUserData, loadTop5 } from "../../action creators";
 import socket from "../../sockets";
 import Header from "./header";
+import history from "../../history";
 
 class User extends React.Component {
   state = {};
   componentDidMount = () => {
     setTimeout(() => {
-      socket.emit("connected", this.props.location.state.username);
-      this.props.loadUserData(this.props.location.state.username);
+      const user = JSON.parse(sessionStorage.getItem("user"));
+      if (!user) {
+        history.push("/login");
+        return;
+      }
+      this.props.loadUserData(user.username);
       this.props.loadTop5();
+      socket.emit("connected", user.username + "connected");
     }, 800);
   };
   componentWillUnmount = () => {
-    socket.emit("disconnected", this.props.location.state.username);
+    socket.emit("disconnected", socket.id + " disconnected");
   };
 
   render = () => {
-    console.log(this.props);
-    return this.props.location.state.username ? (
+    return this.props.top5 ? (
       <React.Fragment>
-        <Header username={this.props.location.state.username} />
+        <Header username={this.props.user.username} />
       </React.Fragment>
     ) : (
       <Dimmer active inverted>
@@ -32,9 +37,7 @@ class User extends React.Component {
   };
 }
 
-const mapStateToProps = state => {
-  console.log(state);
-  return {};
+const mapStateToProps = ({ user, userData, top5 }) => {
+  return { user, userData, top5 };
 };
-
 export default connect(mapStateToProps, { loadUserData, loadTop5 })(User);
