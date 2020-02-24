@@ -30,9 +30,4 @@ class Head extends React.Component {
   }
 }
 
-const mapStateToProps = state => {
-  console.log(state);
-  return {};
-};
-
-export default connect(mapStateToProps, { logoutUser })(Head);
+export default connect(null, { logoutUser })(Head);

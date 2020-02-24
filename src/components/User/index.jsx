@@ -21,7 +21,7 @@ class User extends React.Component {
     }, 800);
   };
   componentWillUnmount = () => {
-    socket.emit("disconnected", socket.id + " disconnected");
+    socket.emit("disconnected", this.props.user.username + " disconnected");
   };
 
   render = () => {
