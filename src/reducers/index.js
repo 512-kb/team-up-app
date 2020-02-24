@@ -16,6 +16,9 @@ const loginReducer = (user = { username: false }, action) => {
   return user;
 };
 
+const activeTabReducer = (activeTab = "POSTS", action) =>
+  action.type === "SWITCH_TAB" ? action.payload : activeTab;
+
 const userDataReducer = (userData = {}, action) =>
   action.type === "LOAD_USER_DATA" ? action.payload : userData;
 
@@ -29,5 +32,6 @@ const top5Reducer = (top5 = false, action) => {
 export default combineReducers({
   user: loginReducer,
   userData: userDataReducer,
-  top5: top5Reducer
+  top5: top5Reducer,
+  activeTab: activeTabReducer
 });

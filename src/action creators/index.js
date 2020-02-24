@@ -11,6 +11,10 @@ export const logoutUser = () => {
   return { type: "LOGOUT" };
 };
 
+export const switchTab = tab => {
+  return { type: "SWITCH_TAB", payload: tab };
+};
+
 export const registerUser = formValues => async dispatch => {
   const user = await axios.post("/register", formValues);
   dispatch({ type: "REGISTER_USER", payload: user.data });
