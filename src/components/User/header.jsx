@@ -1,10 +1,15 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+import { logoutUser } from "../../action creators";
 import { Button, Header, Image, Segment } from "semantic-ui-react";
 
 class Head extends React.Component {
   state = {};
-  logout = () => sessionStorage.clear();
+  logout = () => {
+    sessionStorage.clear();
+    this.props.logoutUser();
+  };
   render() {
     return (
       <Segment clearing>
@@ -25,4 +30,9 @@ class Head extends React.Component {
   }
 }
 
-export default Head;
+const mapStateToProps = state => {
+  console.log(state);
+  return {};
+};
+
+export default connect(mapStateToProps, { logoutUser })(Head);

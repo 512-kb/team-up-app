@@ -10,6 +10,9 @@ const loginReducer = (user = { username: false }, action) => {
   if (action.type === "REGISTER_USER") {
     return action.payload;
   }
+  if (action.type === "LOGOUT") {
+    return { username: false };
+  }
   return user;
 };
 

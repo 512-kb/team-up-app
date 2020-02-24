@@ -7,6 +7,10 @@ export const loginUser = formValues => async dispatch => {
   dispatch({ type: "LOGIN_USER", payload: user.data });
 };
 
+export const logoutUser = () => {
+  return { type: "LOGOUT" };
+};
+
 export const registerUser = formValues => async dispatch => {
   const user = await axios.post("/register", formValues);
   dispatch({ type: "REGISTER_USER", payload: user.data });
