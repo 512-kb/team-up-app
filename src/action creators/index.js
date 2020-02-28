@@ -60,3 +60,12 @@ export const respondToInvite = (invite_data, isAccepted = true) => async () => {
   else await axios.delete("/invitations", { params: invite_data });
   return null;
 };
+
+export const createChannel = formValues => async dispatch => {
+  const msg = (await axios.post("/channels", formValues)).data.msg;
+  alert(msg);
+  const channels = (
+    await axios.get("/channels", { params: { username: formValues.username } })
+  ).data;
+  dispatch({ type: "CREATE_CHANNEL", payload: channels });
+};

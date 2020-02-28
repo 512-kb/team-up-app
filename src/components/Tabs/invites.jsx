@@ -4,8 +4,10 @@ import { connect } from "react-redux";
 import { respondToInvite, loadInvites } from "../../action creators";
 
 class Invites extends React.Component {
-  componentDidMount = () => {
-    this.props.loadInvites(this.props.user.username);
+  state = {};
+  componentDidMount = async () => {
+    await this.props.loadInvites(this.props.user.username);
+    //console.log(this.props);
   };
   render() {
     return (
@@ -23,11 +25,11 @@ class Invites extends React.Component {
                 <Card.Content extra>
                   <div className="ui two buttons">
                     <Button
-                      onClick={() => {
-                        this.props.respondToInvite({
+                      onClick={async () => {
+                        await this.props.respondToInvite({
                           _id: invite._id
                         });
-                        alert("Invite Accepted");
+                        await this.props.loadInvites(this.props.user.username);
                       }}
                       basic
                       color="green"
@@ -35,14 +37,14 @@ class Invites extends React.Component {
                       Accept
                     </Button>
                     <Button
-                      onClick={() => {
-                        this.props.respondToInvite(
+                      onClick={async () => {
+                        await this.props.respondToInvite(
                           {
                             _id: invite._id
                           },
                           false
                         );
-                        alert("Invite Rejected");
+                        await this.props.loadInvites(this.props.user.username);
                       }}
                       basic
                       color="red"

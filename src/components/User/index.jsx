@@ -23,11 +23,6 @@ class User extends React.Component {
     socket.emit("disconnected", this.props.user.username + " disconnected");
   };
 
-  static getDerivedStateFromProps(props, state) {
-    //console.log(props, state);
-    return null;
-  }
-
   render = () => {
     return this.props.user ? (
       <React.Fragment>

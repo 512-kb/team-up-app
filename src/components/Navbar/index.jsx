@@ -1,7 +1,8 @@
 import React, { Component } from "react";
-import { Menu, Button, Icon } from "semantic-ui-react";
+import { Menu } from "semantic-ui-react";
 import { connect } from "react-redux";
 import { switchTab } from "../../action creators";
+import NewChannelBtn from "./newChannel";
 
 class Navbar extends Component {
   state = { activeItem: "POSTS" };
@@ -31,9 +32,7 @@ class Navbar extends Component {
             onClick={this.handleItemClick}
           />
           <Menu.Item>
-            <Button icon primary>
-              <Icon name="add" /> New Channel
-            </Button>
+            <NewChannelBtn />
           </Menu.Item>
         </Menu.Menu>
       </Menu>

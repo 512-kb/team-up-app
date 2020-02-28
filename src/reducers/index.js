@@ -17,7 +17,10 @@ const activeTabReducer = (activeTab = "POSTS", action) =>
   action.type === "SWITCH_TAB" ? action.payload : activeTab;
 
 const userChannelsReducer = (channels = [], action) => {
-  return action.type === "LOAD_USER_CHANNELS" ? action.payload : channels;
+  return action.type === "LOAD_USER_CHANNELS" ||
+    action.type === "CREATE_CHANNEL"
+    ? action.payload
+    : channels;
 };
 
 const userPostsReducer = (posts = [], action) => {

@@ -12,7 +12,7 @@ class Head extends React.Component {
   };
   render() {
     return (
-      <Segment clearing>
+      <Segment style={{ height: "10vh" }} clearing>
         <Header as="h2" floated="left">
           <Image
             circular
