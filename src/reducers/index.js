@@ -4,10 +4,7 @@ import { combineReducers } from "redux";
 const loginReducer = (user = { username: false }, action) => {
   const userAlreadyLoggedIn = JSON.parse(sessionStorage.getItem("user"));
   if (userAlreadyLoggedIn) return userAlreadyLoggedIn;
-  if (action.type === "LOGIN_USER") {
-    return action.payload;
-  }
-  if (action.type === "REGISTER_USER") {
+  if (action.type === "LOGIN_USER" || action.type === "REGISTER_USER") {
     return action.payload;
   }
   if (action.type === "LOGOUT") {
@@ -19,10 +16,19 @@ const loginReducer = (user = { username: false }, action) => {
 const activeTabReducer = (activeTab = "POSTS", action) =>
   action.type === "SWITCH_TAB" ? action.payload : activeTab;
 
-const userDataReducer = (userData = {}, action) =>
-  action.type === "LOAD_USER_DATA" ? action.payload : userData;
+const userChannelsReducer = (channels = [], action) => {
+  return action.type === "LOAD_USER_CHANNELS" ? action.payload : channels;
+};
 
-const top5Reducer = (top5 = false, action) => {
+const userPostsReducer = (posts = [], action) => {
+  return action.type === "LOAD_USER_POSTS" ? action.payload : posts;
+};
+
+const userInvitesReducer = (invites = [], action) => {
+  return action.type === "LOAD_USER_INVITES" ? action.payload : invites;
+};
+
+const top5Reducer = (top5 = [], action) => {
   if (action.type === "FETCH_TOP5") {
     return action.payload;
   }
@@ -31,7 +37,9 @@ const top5Reducer = (top5 = false, action) => {
 
 export default combineReducers({
   user: loginReducer,
-  userData: userDataReducer,
+  channels: userChannelsReducer,
+  posts: userPostsReducer,
+  invites: userInvitesReducer,
   top5: top5Reducer,
   activeTab: activeTabReducer
 });

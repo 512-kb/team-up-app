@@ -3,7 +3,6 @@ import { Dimmer, Loader, Segment } from "semantic-ui-react";
 import { connect } from "react-redux";
 import Dashboard from "../Dashboard";
 import Navbar from "../Navbar";
-import { loadUserData, loadTop5 } from "../../action creators";
 import socket from "../../sockets";
 import Header from "./header";
 import history from "../../history";
@@ -17,8 +16,6 @@ class User extends React.Component {
         history.push("/login");
         return;
       }
-      this.props.loadUserData(user.username);
-      this.props.loadTop5();
       socket.emit("connected", user.username + " connected");
     }, 800);
   };
@@ -26,12 +23,17 @@ class User extends React.Component {
     socket.emit("disconnected", this.props.user.username + " disconnected");
   };
 
+  static getDerivedStateFromProps(props, state) {
+    //console.log(props, state);
+    return null;
+  }
+
   render = () => {
-    return this.props.top5 ? (
+    return this.props.user ? (
       <React.Fragment>
         <Header username={this.props.user.username} />
         <Segment>
-          <Navbar invites={this.props.userData.invites} />
+          <Navbar />
           <Dashboard />
         </Segment>
       </React.Fragment>
@@ -43,7 +45,7 @@ class User extends React.Component {
   };
 }
 
-const mapStateToProps = ({ user, userData, top5 }) => {
-  return { user, userData, top5 };
+const mapStateToProps = ({ user }) => {
+  return { user };
 };
-export default connect(mapStateToProps, { loadUserData, loadTop5 })(User);
+export default connect(mapStateToProps)(User);

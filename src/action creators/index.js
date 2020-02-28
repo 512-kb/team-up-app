@@ -20,25 +20,43 @@ export const registerUser = formValues => async dispatch => {
   dispatch({ type: "REGISTER_USER", payload: user.data });
 };
 
-export const loadUserData = username => async dispatch => {
+export const loadChannels = username => async dispatch => {
   const channels = (await axios.get("/channels", { params: { username } }))
     .data;
+  dispatch({
+    type: "LOAD_USER_CHANNELS",
+    payload: channels
+  });
+};
+
+export const loadPosts = post_params => async dispatch => {
+  const posts = (
+    await axios.get("/posts", {
+      params: post_params
+    })
+  ).data;
+  dispatch({
+    type: "LOAD_USER_POSTS",
+    payload: posts
+  });
+};
+
+export const loadInvites = username => async dispatch => {
   const invites = (await axios.get("/invitations", { params: { username } }))
     .data;
-  const posts = channels.length
-    ? (
-        await axios.get("/posts", {
-          params: { username, channel_id: channels[0]._id }
-        })
-      ).data
-    : [];
   dispatch({
-    type: "LOAD_USER_DATA",
-    payload: { channels, invites, posts }
+    type: "LOAD_USER_INVITES",
+    payload: invites
   });
 };
 
 export const loadTop5 = () => async dispatch => {
   const top5 = (await axios.get("/top5")).data;
   dispatch({ type: "FETCH_TOP5", payload: top5 });
+};
+
+export const respondToInvite = (invite_data, isAccepted = true) => async () => {
+  if (isAccepted) await axios.put("/invitations", invite_data);
+  else await axios.delete("/invitations", { params: invite_data });
+  return null;
 };

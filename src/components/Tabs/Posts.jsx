@@ -8,7 +8,7 @@ class Posts extends React.Component {
       <Grid stackable>
         <Grid.Row stretched>
           <Grid.Column stretched>
-            <Channels data={this.props.data.channels} />
+            <Channels />
           </Grid.Column>
           <Grid.Column width={15} stretched>
             <br />

@@ -40,7 +40,4 @@ class Navbar extends Component {
     );
   }
 }
-
-const getInvites = ({ userData }) => userData;
-
-export default connect(getInvites, { switchTab })(Navbar);
+export default connect(null, { switchTab })(Navbar);

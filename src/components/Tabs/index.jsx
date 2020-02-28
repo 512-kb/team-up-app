@@ -7,11 +7,11 @@ class ActiveTab extends React.Component {
   render = () => {
     switch (this.props.tab) {
       case "TOP5":
-        return <Top5 data={this.props.data} />;
+        return <Top5 />;
       case "INVITES":
-        return <Invites data={this.props.data} />;
+        return <Invites />;
       default:
-        return <Posts data={this.props.data} />;
+        return <Posts />;
     }
   };
 }
