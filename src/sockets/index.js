@@ -4,12 +4,8 @@ import io from "socket.io-client";
 const apiURL = "https://demo-api.herokuapp.com";
 // eslint-disable-next-line
 const localURL =
-  window.location.protocol + "//" + window.location.hostname + ":" + 3002;
+  window.location.protocol + "//" + window.location.hostname + ":" + 3001;
 
 const socket = io(window.location.hostname === "localhost" ? localURL : apiURL);
-
-socket.on("sockets on", id => {
-  console.log("connection: " + id);
-});
 
 export default socket;

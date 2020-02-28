@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Menu, Dropdown, Button, Icon } from "semantic-ui-react";
+import { Menu, Button, Icon } from "semantic-ui-react";
 import { connect } from "react-redux";
 import { switchTab } from "../../action creators";
 
@@ -12,7 +12,7 @@ class Navbar extends Component {
   };
   render() {
     return (
-      <Menu pointing secondary>
+      <Menu size="large" pointing>
         <Menu.Item header>TEAM-UP</Menu.Item>
         <Menu.Item
           name="POSTS"
@@ -25,18 +25,22 @@ class Navbar extends Component {
           onClick={this.handleItemClick}
         />
         <Menu.Menu position="right">
-          <Dropdown item text="INVITES">
-            <Dropdown.Menu></Dropdown.Menu>
-          </Dropdown>
+          <Menu.Item
+            name="INVITES"
+            active={this.state.activeItem === "INVITES"}
+            onClick={this.handleItemClick}
+          />
+          <Menu.Item>
+            <Button icon primary>
+              <Icon name="add" /> New Channel
+            </Button>
+          </Menu.Item>
         </Menu.Menu>
-        <Menu.Item>
-          <Button icon primary>
-            <Icon name="add" /> New Channel
-          </Button>
-        </Menu.Item>
       </Menu>
     );
   }
 }
 
-export default connect(null, { switchTab })(Navbar);
+const getInvites = ({ userData }) => userData;
+
+export default connect(getInvites, { switchTab })(Navbar);

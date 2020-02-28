@@ -5,6 +5,7 @@ import Tabs from "../Tabs";
 class Dashboard extends React.Component {
   dataSelector = () => {
     switch (this.props.activeTab) {
+      case "INVITES":
       case "POSTS":
         return this.props.userData;
       case "TOP5":

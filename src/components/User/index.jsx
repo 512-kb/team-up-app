@@ -2,7 +2,7 @@ import React from "react";
 import { Dimmer, Loader, Segment } from "semantic-ui-react";
 import { connect } from "react-redux";
 import Dashboard from "../Dashboard";
-import Navbar from "./Navbar";
+import Navbar from "../Navbar";
 import { loadUserData, loadTop5 } from "../../action creators";
 import socket from "../../sockets";
 import Header from "./header";
@@ -31,7 +31,7 @@ class User extends React.Component {
       <React.Fragment>
         <Header username={this.props.user.username} />
         <Segment>
-          <Navbar />
+          <Navbar invites={this.props.userData.invites} />
           <Dashboard />
         </Segment>
       </React.Fragment>
