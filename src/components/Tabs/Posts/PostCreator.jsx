@@ -30,18 +30,6 @@ class PostForm extends Component {
           bottom: "0"
         }}
       >
-        <TextArea
-          name="content"
-          placeholder="Post Content"
-          style={{
-            position: "relative",
-            width: "100%",
-            height: "50%",
-            resize: "none"
-          }}
-          onChange={this.handleChange}
-        />
-        <br />
         <Dropdown
           name="tags"
           placeholder="Tags"
@@ -53,10 +41,21 @@ class PostForm extends Component {
           })}
           onChange={this.handleChange}
         />
-        <br />
         <Button color="green" floated="right" onClick={this.validate}>
           POST
         </Button>
+        <br />
+        <TextArea
+          name="content"
+          placeholder="Post Content"
+          style={{
+            position: "relative",
+            width: "100%",
+            height: "70%",
+            resize: "none"
+          }}
+          onChange={this.handleChange}
+        />
       </Segment>
     ) : (
       <React.Fragment>Loading..</React.Fragment>

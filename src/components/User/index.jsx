@@ -1,10 +1,9 @@
 import React from "react";
 import { Dimmer, Loader, Segment } from "semantic-ui-react";
 import { connect } from "react-redux";
-import Dashboard from "../Dashboard";
 import Navbar from "../Navbar";
-import socket from "../../sockets";
 import Header from "./header";
+import Tabs from "../Tabs";
 import history from "../../history";
 
 class User extends React.Component {
@@ -16,20 +15,15 @@ class User extends React.Component {
         history.push("/login");
         return;
       }
-      socket.emit("connected", user.username + " connected");
     }, 800);
   };
-  componentWillUnmount = () => {
-    socket.emit("disconnected", this.props.user.username + " disconnected");
-  };
-
   render = () => {
     return this.props.user ? (
       <React.Fragment>
         <Header username={this.props.user.username} />
         <Segment>
           <Navbar />
-          <Dashboard />
+          <Tabs tab={this.props.activeTab} />
         </Segment>
       </React.Fragment>
     ) : (
@@ -40,7 +34,7 @@ class User extends React.Component {
   };
 }
 
-const mapStateToProps = ({ user }) => {
-  return { user };
+const mapStateToProps = ({ activeTab, user }) => {
+  return { activeTab, user };
 };
 export default connect(mapStateToProps)(User);

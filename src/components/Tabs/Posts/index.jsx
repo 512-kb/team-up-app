@@ -1,7 +1,8 @@
 import React from "react";
 import { Grid } from "semantic-ui-react";
 import Channels from "./channels";
-import ChatArea from "./ChatArea";
+import PostCreator from "./PostCreator";
+import ChatContainer from "./ChatContainer";
 
 class Posts extends React.Component {
   render = () => {
@@ -27,7 +28,8 @@ class Posts extends React.Component {
             }}
             stretched
           >
-            <ChatArea />
+            <ChatContainer />
+            <PostCreator />
           </Grid.Column>
         </Grid.Row>
       </Grid>
