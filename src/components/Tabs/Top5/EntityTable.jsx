@@ -1,6 +1,6 @@
 import React from "react";
 import { Dimmer, Loader, Segment, Header, Table } from "semantic-ui-react";
-import { loadTop5 } from "../../action creators";
+import { loadTop5 } from "../../../action creators";
 import { connect } from "react-redux";
 
 class Entity extends React.Component {

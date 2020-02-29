@@ -1,7 +1,7 @@
 import React from "react";
 import { Menu, Loader } from "semantic-ui-react";
 import { connect } from "react-redux";
-import { loadChannels } from "../../action creators";
+import { loadChannels } from "../../../action creators";
 class Channels extends React.Component {
   state = { activeItem: "home" };
   handleItemClick = (e, { name }) => this.setState({ activeItem: name });
