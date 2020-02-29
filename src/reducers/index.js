@@ -1,5 +1,5 @@
 import { combineReducers } from "redux";
-//import _ from "lodash";
+import _ from "lodash";
 
 const loginReducer = (user = { username: false }, action) => {
   const userAlreadyLoggedIn = JSON.parse(sessionStorage.getItem("user"));
@@ -31,9 +31,9 @@ const userInvitesReducer = (invites = [], action) => {
   return action.type === "LOAD_USER_INVITES" ? action.payload : invites;
 };
 
-const top5Reducer = (top5 = [], action) => {
-  if (action.type === "FETCH_TOP5") {
-    return action.payload;
+const top5Reducer = (top5 = {}, { type, payload }) => {
+  if (type === "FETCH_TOP5") {
+    return _.assign(top5, { [payload.entity]: payload.data });
   }
   return top5;
 };

@@ -1,18 +1,22 @@
 import React from "react";
-import { connect } from "react-redux";
-import { loadTop5 } from "../../action creators";
+import { Segment } from "semantic-ui-react";
+import Entity from "./EntityTable";
 
 class Top5 extends React.Component {
-  componentDidMount = () => {
-    this.props.loadTop5();
+  render = () => {
+    return (
+      <React.Fragment>
+        <Segment.Group horizontal>
+          <Entity name="users" />
+          <Entity name="channels" />
+        </Segment.Group>
+        <Segment.Group horizontal>
+          <Entity name="regions" />
+          <Entity name="tags" />
+        </Segment.Group>
+      </React.Fragment>
+    );
   };
-  render() {
-    return <h2>TOP 5</h2>;
-  }
 }
 
-const getTop5 = ({ top5 }) => {
-  return { top5 };
-};
-
-export default connect(getTop5, { loadTop5 })(Top5);
+export default Top5;

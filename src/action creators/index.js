@@ -50,9 +50,9 @@ export const loadInvites = username => async dispatch => {
   });
 };
 
-export const loadTop5 = () => async dispatch => {
-  const top5 = (await axios.get("/top5")).data;
-  dispatch({ type: "FETCH_TOP5", payload: top5 });
+export const loadTop5 = entity => async dispatch => {
+  const data = (await axios.get("/top5", { params: { entity } })).data;
+  dispatch({ type: "FETCH_TOP5", payload: { entity, data } });
 };
 
 export const respondToInvite = (invite_data, isAccepted = true) => async () => {
