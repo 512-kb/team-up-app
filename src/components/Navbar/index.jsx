@@ -3,6 +3,7 @@ import { Menu } from "semantic-ui-react";
 import { connect } from "react-redux";
 import { switchTab } from "../../action creators";
 import NewChannelBtn from "./newChannel";
+import NewInviteBtn from "./newInvite";
 
 class Navbar extends Component {
   state = { activeItem: "POSTS" };
@@ -33,6 +34,9 @@ class Navbar extends Component {
           />
           <Menu.Item>
             <NewChannelBtn />
+          </Menu.Item>
+          <Menu.Item>
+            <NewInviteBtn />
           </Menu.Item>
         </Menu.Menu>
       </Menu>
