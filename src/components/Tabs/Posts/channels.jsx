@@ -1,21 +1,26 @@
 import React from "react";
 import { Menu, Loader } from "semantic-ui-react";
 import { connect } from "react-redux";
-import { loadChannels } from "../../../action creators";
+import { loadChannels, switchChannel } from "../../../action creators";
 class Channels extends React.Component {
-  state = { activeItem: "home" };
-  handleItemClick = (e, { name }) => this.setState({ activeItem: name });
+  state = { activeItem: "" };
+  handleItemClick = (e, { name }) => {
+    this.setState({ activeItem: name });
+  };
 
   componentDidMount = () => {
     this.props.loadChannels(this.props.user.username);
   };
 
-  channelSwitch = ({ name, _id }) => (
+  channelList = channel => (
     <Menu.Item
-      name={name}
-      key={_id}
-      active={this.state.activeItem === name}
-      onClick={this.handleItemClick}
+      name={channel.name}
+      key={channel._id}
+      active={this.state.activeItem === channel.name}
+      onClick={(e, item) => {
+        this.handleItemClick(e, item);
+        this.props.switchChannel(channel);
+      }}
     />
   );
 
@@ -23,7 +28,7 @@ class Channels extends React.Component {
     this.props.channels ? (
       <Menu text vertical stackable>
         <Menu.Item header>CHANNELS</Menu.Item>
-        {this.props.channels.map(channel => this.channelSwitch(channel))}
+        {this.props.channels.map(channel => this.channelList(channel))}
       </Menu>
     ) : (
       <Loader active inline />
@@ -34,4 +39,4 @@ const getChannels = ({ user, channels }) => {
   return { user, channels };
 };
 
-export default connect(getChannels, { loadChannels })(Channels);
+export default connect(getChannels, { loadChannels, switchChannel })(Channels);

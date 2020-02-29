@@ -1,6 +1,6 @@
 import React from "react";
-import Posts from "./Posts";
-import Top5 from "./Top5";
+import Posts from "./Posts/index";
+import Top5 from "./Top5/index";
 import Invites from "./invites";
 import { Segment } from "semantic-ui-react";
 

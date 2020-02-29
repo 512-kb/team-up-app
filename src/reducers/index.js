@@ -16,6 +16,15 @@ const loginReducer = (user = { username: false }, action) => {
 const activeTabReducer = (activeTab = "POSTS", action) =>
   action.type === "SWITCH_TAB" ? action.payload : activeTab;
 
+const activeChannelReducer = (activeChannel = false, { type, payload }) => {
+  if (
+    type === "LOAD_USER_CHANNELS" ||
+    (type === "CREATE_CHANNEL" && payload.length > 0)
+  )
+    return payload[0];
+  return type === "SWITCH_CHANNEL" ? payload : activeChannel;
+};
+
 const userChannelsReducer = (channels = [], action) => {
   return action.type === "LOAD_USER_CHANNELS" ||
     action.type === "CREATE_CHANNEL"
@@ -44,5 +53,6 @@ export default combineReducers({
   posts: userPostsReducer,
   invites: userInvitesReducer,
   top5: top5Reducer,
-  activeTab: activeTabReducer
+  activeTab: activeTabReducer,
+  activeChannel: activeChannelReducer
 });

@@ -15,6 +15,10 @@ export const switchTab = tab => {
   return { type: "SWITCH_TAB", payload: tab };
 };
 
+export const switchChannel = channel => {
+  return { type: "SWITCH_CHANNEL", payload: channel };
+};
+
 export const registerUser = formValues => async dispatch => {
   const user = await axios.post("/register", formValues);
   dispatch({ type: "REGISTER_USER", payload: user.data });
