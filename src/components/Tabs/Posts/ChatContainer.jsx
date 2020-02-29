@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import { Segment, Feed } from "semantic-ui-react";
+import { Segment, Feed, Label } from "semantic-ui-react";
+import moment from "moment";
 import { connect } from "react-redux";
 import socket from "../../../sockets";
 class ChatContainer extends Component {
@@ -25,22 +26,40 @@ class ChatContainer extends Component {
           marginBottom: "0"
         }}
       >
-        <Segment>
-          <Feed.User>
-            <b>Joe Henderson</b>
-          </Feed.User>
-          <span style={{ color: "#bfbfbf" }}> 3 days ago</span>
-          <Feed.Extra text>
-            Ours is a life of constant reruns. We're always circling back to
-            where we'd we started, then starting all over again. Even if we
-            don't run extra laps that day, we surely will come back for more of
-            the same another day soon.
-          </Feed.Extra>
-        </Segment>
+        {createPost({
+          tags: ["tag1", "tag2"],
+          _id: "5e54122d4d8ff90f5454eea7",
+          username: "kunal",
+          content: "This is sample post no. 1",
+          channel_id: "5e5944921e1e6e3710b6f18e",
+          created: "1582567981412",
+          __v: 0
+        })}
       </Segment>
     );
   }
 }
+
+const createPost = post => {
+  return (
+    <Segment key={post._id}>
+      <Feed.User>
+        <b style={{ marginRight: "1%", fontSize: "1.1rem" }}>{post.username}</b>
+      </Feed.User>
+      <span style={{ color: "#bfbfbf", fontSize: "0.85rem" }}>
+        {moment(post.created, "x").format("h:mm A, D-MMM-YYYY")}
+      </span>
+      <span style={{ float: "right" }}>
+        {post.tags.map(tag => (
+          <Label color="orange" key={tag}>
+            {tag}
+          </Label>
+        ))}
+      </span>
+      <Feed.Extra text>{post.content}</Feed.Extra>
+    </Segment>
+  );
+};
 
 const getActiveChannel = ({ activeChannel, user }) => {
   return { activeChannel, user };
