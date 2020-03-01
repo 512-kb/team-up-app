@@ -17,11 +17,11 @@ const activeTabReducer = (activeTab = "POSTS", action) =>
   action.type === "SWITCH_TAB" ? action.payload : activeTab;
 
 const activeChannelReducer = (
-  activeChannel = { tags: false },
+  activeChannel = { _id: false },
   { type, payload }
 ) => {
   if (type === "LOAD_USER_CHANNELS" || type === "CREATE_CHANNEL")
-    return payload.length < 1 ? activeChannel : payload;
+    return payload.length < 1 ? activeChannel : payload[0];
 
   return type === "SWITCH_CHANNEL" ? payload : activeChannel;
 };
