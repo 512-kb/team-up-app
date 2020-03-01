@@ -14,7 +14,11 @@ const loginReducer = (user = { username: false }, action) => {
 };
 
 const activeTabReducer = (activeTab = "POSTS", action) =>
-  action.type === "SWITCH_TAB" ? action.payload : activeTab;
+  action.type === "LOGOUT"
+    ? "POSTS"
+    : action.type === "SWITCH_TAB"
+    ? action.payload
+    : activeTab;
 
 const activeChannelReducer = (
   activeChannel = { _id: false },
@@ -34,7 +38,9 @@ const userChannelsReducer = (channels = [], action) => {
 };
 
 const userPostsReducer = (posts = [], action) => {
-  return action.type === "LOAD_USER_POSTS" ? action.payload : posts;
+  if (action.type === "NEW_POST") return [...posts, action.payload];
+  if (action.type === "LOAD_USER_POSTS") return action.payload;
+  return posts;
 };
 
 const userInvitesReducer = (invites = [], action) => {

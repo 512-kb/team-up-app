@@ -78,3 +78,7 @@ export const createInvite = async formValues => {
   const res = (await axios.post("/invitations", formValues)).data;
   return res;
 };
+
+export const updatePosts = newPost => async dispatch => {
+  dispatch({ type: "NEW_POST", payload: newPost });
+};

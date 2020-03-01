@@ -3,6 +3,10 @@ import { Segment, Feed, Label } from "semantic-ui-react";
 import moment from "moment";
 import { connect } from "react-redux";
 import socket from "../../../sockets";
+
+socket.on("new_post_braodcast", ob => {
+  console.log(ob);
+});
 class ChatContainer extends Component {
   state = { activeChannel: false };
 

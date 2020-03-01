@@ -1,22 +1,42 @@
 import React, { Component } from "react";
 import { TextArea, Segment, Dropdown, Button } from "semantic-ui-react";
 import { connect } from "react-redux";
+import _ from "lodash";
+import socket from "../../../sockets";
 
+const contentCSS = {
+  position: "relative",
+  width: "100%",
+  height: "70%",
+  resize: "none"
+};
 class PostForm extends Component {
   state = { content: "", tags: [], error: false };
 
-  handleChange = (e, { name, value }) =>
+  handleChange = (e, { name, value }) => {
     this.setState({
       [name]: name === "content" ? value.replace(/\s\s+/g, " ") : value
     });
+  };
 
   validate = () => {
-    if (this.state.content.length < 1) {
+    if (this.state.content.length < 2) {
       this.setState({ error: "Invalid Content" });
       return false;
     }
     this.setState({ error: false });
     return true;
+  };
+
+  onSubmit = () => {
+    if (!this.validate()) return;
+    socket.emit("new_post", {
+      username: this.props.user.username,
+      tags: this.state.tags,
+      content: this.state.content,
+      channel_id: this.props.activeChannel._id
+    });
+    this.setState({ content: "", tags: [], error: false });
   };
 
   render() {
@@ -41,19 +61,18 @@ class PostForm extends Component {
           })}
           onChange={this.handleChange}
         />
-        <Button color="green" floated="right" onClick={this.validate}>
+        <Button color="green" floated="right" onClick={this.onSubmit}>
           POST
         </Button>
         <br />
         <TextArea
           name="content"
-          placeholder="Post Content"
-          style={{
-            position: "relative",
-            width: "100%",
-            height: "70%",
-            resize: "none"
-          }}
+          placeholder={this.state.error ? "Enter some text!" : "Post Content"}
+          style={
+            this.state.error
+              ? _.assign(contentCSS, { border: "4px solid red" })
+              : contentCSS
+          }
           onChange={this.handleChange}
         />
       </Segment>
@@ -63,8 +82,6 @@ class PostForm extends Component {
   }
 }
 
-const getActiveChannel = ({ activeChannel, user }) => {
+export default connect(({ activeChannel, user }) => {
   return { activeChannel, user };
-};
-
-export default connect(getActiveChannel)(PostForm);
+})(PostForm);

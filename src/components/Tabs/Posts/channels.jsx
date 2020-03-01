@@ -8,8 +8,10 @@ class Channels extends React.Component {
     this.setState({ activeItem: name });
   };
 
-  componentDidMount = () => {
-    this.props.loadChannels(this.props.user.username);
+  componentDidMount = async () => {
+    await this.props.loadChannels(this.props.user.username);
+    if (this.props.channels && this.props.channels.length)
+      this.setState({ activeItem: this.props.channels[0].name });
   };
 
   channelList = channel => (

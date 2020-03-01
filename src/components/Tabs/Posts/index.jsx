@@ -1,12 +1,21 @@
 import React from "react";
 import { Grid } from "semantic-ui-react";
+import { connect } from "react-redux";
+import { loadChannels } from "../../../action creators";
 import Channels from "./channels";
 import PostCreator from "./PostCreator";
 import ChatContainer from "./ChatContainer";
 
 class Posts extends React.Component {
+  state = {};
+  componentDidMount = () => {
+    this.props.loadChannels(this.props.user.username);
+  };
+  static getDerivedStateFromProps(props, state) {
+    return state;
+  }
   render = () => {
-    return (
+    return this.props.channels.length ? (
       <Grid style={{ position: "relative", height: "100%" }} stackable>
         <Grid.Row style={{ paddingBottom: "0" }} stretched>
           <Grid.Column
@@ -33,8 +42,15 @@ class Posts extends React.Component {
           </Grid.Column>
         </Grid.Row>
       </Grid>
+    ) : (
+      <React.Fragment>NO CHANNEL SUBSCRIBED</React.Fragment>
     );
   };
 }
 
-export default Posts;
+export default connect(
+  ({ channels, user }) => {
+    return { channels, user };
+  },
+  { loadChannels }
+)(Posts);
