@@ -13,12 +13,12 @@ class CreateInvite extends Component {
 
   handleChange = (e, { name, value }) =>
     this.setState({ [name]: name === "channel" ? JSON.parse(value) : value });
-  handleOpen = () => {
+  openModal = () => {
     if (this.props.channels.length < 1) {
       alert("No Channel created to Invite anyone");
     } else this.setState({ modalOpen: true });
   };
-  handleClose = () => this.setState({ modalOpen: false });
+  closeModal = () => this.setState({ modalOpen: false });
 
   validate = () => {
     this.setState({ requestSent: true });
@@ -49,7 +49,7 @@ class CreateInvite extends Component {
         error: { username: msg.err, channel: false }
       });
     } else {
-      this.handleClose();
+      this.closeModal();
       alert(msg.msg);
     }
   };
@@ -58,12 +58,12 @@ class CreateInvite extends Component {
     return (
       <Modal
         trigger={
-          <Button onClick={this.handleOpen} icon primary>
+          <Button onClick={this.openModal} icon primary>
             <Icon name="add" /> New Invite
           </Button>
         }
         open={this.state.modalOpen}
-        onClose={this.handleClose}
+        onClose={this.closeModal}
         closeIcon
       >
         <Modal.Header>Send an Invite </Modal.Header>
