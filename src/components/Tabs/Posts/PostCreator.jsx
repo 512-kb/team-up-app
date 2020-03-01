@@ -20,7 +20,7 @@ class PostForm extends Component {
   };
 
   render() {
-    return this.props.activeChannel ? (
+    return this.props.activeChannel.tags ? (
       <Segment
         style={{
           position: "relative",

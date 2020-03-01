@@ -73,3 +73,8 @@ export const createChannel = formValues => async dispatch => {
   ).data;
   dispatch({ type: "CREATE_CHANNEL", payload: channels });
 };
+
+export const createInvite = async formValues => {
+  const res = (await axios.post("/invitations", formValues)).data;
+  return res;
+};

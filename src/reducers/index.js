@@ -16,12 +16,13 @@ const loginReducer = (user = { username: false }, action) => {
 const activeTabReducer = (activeTab = "POSTS", action) =>
   action.type === "SWITCH_TAB" ? action.payload : activeTab;
 
-const activeChannelReducer = (activeChannel = false, { type, payload }) => {
-  if (
-    type === "LOAD_USER_CHANNELS" ||
-    (type === "CREATE_CHANNEL" && payload.length > 0)
-  )
-    return payload[0];
+const activeChannelReducer = (
+  activeChannel = { tags: false },
+  { type, payload }
+) => {
+  if (type === "LOAD_USER_CHANNELS" || type === "CREATE_CHANNEL")
+    return payload.length < 1 ? activeChannel : payload;
+
   return type === "SWITCH_CHANNEL" ? payload : activeChannel;
 };
 
