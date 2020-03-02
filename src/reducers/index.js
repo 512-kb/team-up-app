@@ -38,13 +38,15 @@ const userChannelsReducer = (channels = [], action) => {
 };
 
 const userPostsReducer = (posts = [], action) => {
+  if (action.type === "SWITCH_CHANNEL") return [];
   if (action.type === "NEW_POST")
     return [
-      ...(posts.length > 20 ? posts.filter((p, i) => i !== 0) : posts),
+      //...(posts.length > 30 ? posts.filter((p, i) => i !== 0) : posts),
+      ...posts,
       action.payload
     ];
 
-  if (action.type === "LOAD_USER_POSTS") return action.payload;
+  if (action.type === "LOAD_USER_POSTS") return [...action.payload, ...posts];
   return posts;
 };
 
