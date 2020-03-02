@@ -14,7 +14,11 @@ class Navbar extends Component {
   };
   render() {
     return (
-      <Menu size="large" pointing>
+      <Menu
+        style={{ position: "relative", height: "6%" }}
+        size="large"
+        pointing
+      >
         <Menu.Item header>TEAM-UP</Menu.Item>
         <Menu.Item
           name="POSTS"

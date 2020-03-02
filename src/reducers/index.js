@@ -38,7 +38,11 @@ const userChannelsReducer = (channels = [], action) => {
 };
 
 const userPostsReducer = (posts = [], action) => {
-  if (action.type === "NEW_POST") return [...posts, action.payload];
+  if (action.type === "NEW_POST")
+    return [
+      ...(posts.length > 20 ? posts.filter((p, i) => i !== 0) : posts),
+      action.payload
+    ];
 
   if (action.type === "LOAD_USER_POSTS") return action.payload;
   return posts;

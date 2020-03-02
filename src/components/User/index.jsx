@@ -1,5 +1,5 @@
 import React from "react";
-import { Dimmer, Loader, Segment } from "semantic-ui-react";
+import { Dimmer, Loader } from "semantic-ui-react";
 import { connect } from "react-redux";
 import Navbar from "../Navbar";
 import Header from "./header";
@@ -21,10 +21,9 @@ class User extends React.Component {
     return this.props.user ? (
       <React.Fragment>
         <Header username={this.props.user.username} />
-        <Segment>
-          <Navbar />
-          <Tabs tab={this.props.activeTab} />
-        </Segment>
+
+        <Navbar />
+        <Tabs tab={this.props.activeTab} />
       </React.Fragment>
     ) : (
       <Dimmer active inverted>

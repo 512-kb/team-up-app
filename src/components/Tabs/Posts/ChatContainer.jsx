@@ -10,7 +10,7 @@ class ChatContainer extends Component {
 
   componentDidMount = () => {
     socket.on("new_post_braodcast", obj => {
-      //console.log(obj);
+      console.log(obj);
       this.props.updatePosts(obj);
     });
   };
@@ -31,7 +31,7 @@ class ChatContainer extends Component {
       <Segment
         style={{
           position: "relative",
-          overflowY: "auto",
+          overflowY: "scroll",
           height: "70%",
           marginBottom: "0"
         }}

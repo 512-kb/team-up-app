@@ -44,7 +44,7 @@ class PostForm extends Component {
       <Segment
         style={{
           position: "relative",
-          height: "30%",
+          height: "20%",
           marginTop: "0",
           top: "0",
           bottom: "0"

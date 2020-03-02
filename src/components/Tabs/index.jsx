@@ -16,7 +16,7 @@ class ActiveTab extends React.Component {
     }
   };
   render = () => (
-    <Segment style={{ overflow: "auto", height: "70vh" }}>
+    <Segment style={{ position: "relative", height: "80%" }}>
       {this.selectTab()}
     </Segment>
   );
