@@ -38,7 +38,7 @@ const userChannelsReducer = (channels = [], action) => {
 };
 
 const userPostsReducer = (posts = [], action) => {
-  if (action.type === "SWITCH_CHANNEL") return [];
+  if (action.type === "SWITCH_CHANNEL" || action.type === "LOGOUT") return [];
   if (action.type === "NEW_POST")
     return [
       //...(posts.length > 30 ? posts.filter((p, i) => i !== 0) : posts),
