@@ -57,7 +57,8 @@ class ChatContainer extends Component {
           overflowY: "scroll",
           scrollbehaviour: "smooth",
           height: "70%",
-          marginBottom: "0"
+          marginBottom: "0",
+          background: "#D0D0D0"
         }}
       >
         {this.props.posts.map((post, i) => createPost(post, i))}

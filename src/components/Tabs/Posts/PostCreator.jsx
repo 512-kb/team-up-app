@@ -47,7 +47,8 @@ class PostForm extends Component {
           height: "20%",
           marginTop: "0",
           top: "0",
-          bottom: "0"
+          bottom: "0",
+          background: "#989898"
         }}
       >
         <Dropdown
