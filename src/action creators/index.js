@@ -33,16 +33,11 @@ export const loadChannels = username => async dispatch => {
   });
 };
 
-export const loadPosts = post_params => async dispatch => {
-  const posts = (
-    await axios.get("/posts", {
-      params: post_params
-    })
-  ).data;
-  dispatch({
+export const loadPosts = posts => {
+  return {
     type: "LOAD_USER_POSTS",
     payload: posts
-  });
+  };
 };
 
 export const loadInvites = username => async dispatch => {
