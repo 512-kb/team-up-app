@@ -79,6 +79,6 @@ export const createInvite = async formValues => {
   return res;
 };
 
-export const updatePosts = newPost => async dispatch => {
-  dispatch({ type: "NEW_POST", payload: newPost });
+export const updatePosts = newPost => {
+  return { type: "NEW_POST", payload: newPost };
 };

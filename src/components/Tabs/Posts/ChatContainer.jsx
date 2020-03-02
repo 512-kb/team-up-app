@@ -2,15 +2,21 @@ import React, { Component } from "react";
 import { Segment, Feed, Label } from "semantic-ui-react";
 import moment from "moment";
 import { connect } from "react-redux";
+import { updatePosts } from "../../../action creators";
 import socket from "../../../sockets";
 
-socket.on("new_post_braodcast", ob => {
-  console.log(ob);
-});
 class ChatContainer extends Component {
   state = { activeChannel: false };
 
+  componentDidMount = () => {
+    socket.on("new_post_braodcast", obj => {
+      //console.log(obj);
+      this.props.updatePosts(obj);
+    });
+  };
+
   static getDerivedStateFromProps(props, state) {
+    //console.log(props);
     if (
       props.activeChannel &&
       props.activeChannel._id !== state.activeChannel._id
@@ -30,23 +36,15 @@ class ChatContainer extends Component {
           marginBottom: "0"
         }}
       >
-        {createPost({
-          tags: ["tag1", "tag2"],
-          _id: "5e54122d4d8ff90f5454eea7",
-          username: "kunal",
-          content: "This is sample post no. 1",
-          channel_id: "5e5944921e1e6e3710b6f18e",
-          created: "1582567981412",
-          __v: 0
-        })}
+        {this.props.posts.map((post, i) => createPost(post, i))}
       </Segment>
     );
   }
 }
 
-const createPost = post => {
+const createPost = (post, i) => {
   return (
-    <Segment key={post._id}>
+    <Segment key={i}>
       <Feed.User>
         <b style={{ marginRight: "1%", fontSize: "1.1rem" }}>{post.username}</b>
       </Feed.User>
@@ -65,8 +63,8 @@ const createPost = post => {
   );
 };
 
-const getActiveChannel = ({ activeChannel, user }) => {
-  return { activeChannel, user };
+const getActiveChannel = ({ activeChannel, posts, user }) => {
+  return { activeChannel, posts, user };
 };
 
-export default connect(getActiveChannel)(ChatContainer);
+export default connect(getActiveChannel, { updatePosts })(ChatContainer);
