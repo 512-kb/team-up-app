@@ -76,13 +76,15 @@ class CreateInvite extends Component {
                 onChange={this.handleChange}
                 placeholder="Channel"
                 error={Boolean(this.state.error.channel)}
-                options={this.props.channels.map(({ _id, name, username }) => {
-                  return {
-                    key: _id,
-                    text: name,
-                    value: JSON.stringify({ _id, name, username })
-                  };
-                })}
+                options={this.props.channels
+                  .filter(ch => ch.username === this.props.user.username)
+                  .map(({ _id, name, username }) => {
+                    return {
+                      key: _id,
+                      text: name,
+                      value: JSON.stringify({ _id, name, username })
+                    };
+                  })}
               />
             </Form.Group>
             <Form.Group>
@@ -122,8 +124,8 @@ class CreateInvite extends Component {
 }
 
 export default connect(
-  ({ channels }) => {
-    return { channels };
+  ({ channels, user }) => {
+    return { channels, user };
   },
   { loadChannels }
 )(CreateInvite);
