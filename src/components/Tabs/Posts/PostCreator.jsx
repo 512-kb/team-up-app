@@ -56,6 +56,7 @@ class PostForm extends Component {
           style={{ position: "relative", marginBottom: "0.3%" }}
           multiple
           selection
+          value={this.state.tags}
           options={this.props.activeChannel.tags.map(tag => {
             return { key: tag, text: tag, value: tag };
           })}
@@ -73,6 +74,7 @@ class PostForm extends Component {
               ? _.assign(contentCSS, { border: "4px solid red" })
               : contentCSS
           }
+          value={this.state.content}
           onChange={this.handleChange}
         />
       </Segment>

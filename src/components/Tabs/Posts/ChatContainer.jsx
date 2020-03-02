@@ -13,6 +13,7 @@ class ChatContainer extends Component {
       console.log(obj);
       this.props.updatePosts(obj);
     });
+    this.scrollToBottom();
   };
 
   static getDerivedStateFromProps(props, state) {
@@ -26,12 +27,19 @@ class ChatContainer extends Component {
     }
     return state;
   }
+  componentDidUpdate = () => this.scrollToBottom();
+  scrollToBottom = () => {
+    let objDiv = document.getElementById("chatContainer");
+    objDiv.scrollTop = objDiv.scrollHeight;
+  };
   render() {
     return (
       <Segment
+        id="chatContainer"
         style={{
           position: "relative",
           overflowY: "scroll",
+          scrollbehaviour: "smooth",
           height: "70%",
           marginBottom: "0"
         }}
