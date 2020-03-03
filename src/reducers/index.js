@@ -91,6 +91,13 @@ const top5Reducer = (top5 = {}, { type, payload }) => {
   }
 };
 
+const pageNoReducer = (page = 0, { type }) => {
+  if (type === "LOAD_USER_POSTS") {
+    return ++page;
+  }
+  return page;
+};
+
 export default combineReducers({
   user: loginReducer,
   channels: userChannelsReducer,
@@ -98,5 +105,6 @@ export default combineReducers({
   invites: userInvitesReducer,
   top5: top5Reducer,
   activeTab: activeTabReducer,
-  activeChannel: activeChannelReducer
+  activeChannel: activeChannelReducer,
+  page: pageNoReducer
 });

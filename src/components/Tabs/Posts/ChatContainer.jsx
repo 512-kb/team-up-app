@@ -6,7 +6,7 @@ import { updatePosts, loadPosts } from "../../../action creators";
 import socket from "../../../sockets";
 
 class ChatContainer extends Component {
-  state = { activeChannel: false, page: 0 };
+  state = { activeChannel: false };
 
   componentDidMount = () => {
     socket.on("new_post_braodcast", obj => {
@@ -19,18 +19,18 @@ class ChatContainer extends Component {
       if (container.scrollTop === 0) {
         socket.emit(
           "fetch_old_posts",
-          { channel_id: this.props.activeChannel._id, page: this.state.page },
+          { channel_id: this.props.activeChannel._id, page: this.props.page },
           this.props.loadPosts
         );
-        this.incrementPage();
       }
     };
   };
 
-  incrementPage = () => this.setState({ page: this.state.page + 1 });
+  componentDidUpdate = prevprops => {
+    if (prevprops.page === this.props.page) this.scrollToBottom();
+  };
 
   static getDerivedStateFromProps = (props, state) => {
-    //console.log(props);
     if (
       props.activeChannel &&
       props.activeChannel._id !== state.activeChannel._id
@@ -47,7 +47,7 @@ class ChatContainer extends Component {
 
   scrollToBottom = () => {
     let container = document.getElementById("chatContainer");
-    container.scrollTop = container.scrollHeight;
+    if (container.scrollHeight) container.scrollTop = container.scrollHeight;
   };
 
   render() {
@@ -90,8 +90,8 @@ const createPost = (post, i) => {
   );
 };
 
-const getActiveChannel = ({ activeChannel, posts, user }) => {
-  return { activeChannel, posts, user };
+const getActiveChannel = ({ activeChannel, posts, user, page }) => {
+  return { activeChannel, posts, user, page };
 };
 
 export default connect(getActiveChannel, { updatePosts, loadPosts })(
