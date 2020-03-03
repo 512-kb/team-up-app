@@ -18,15 +18,20 @@ class Posts extends React.Component {
     return this.props.channels.length ? (
       <Grid style={{ position: "relative", height: "100%" }} stackable>
         <Grid.Row
-          style={{ position: "relative", height: "100%", paddingBottom: "0" }}
+          style={{
+            position: "relative",
+            height: "100%",
+            paddingBottom: "0",
+            display: "flex"
+          }}
           stretched
         >
           <Grid.Column
             style={{
               position: "relative",
-              overflowX: "hidden",
+              overflowX: "auto",
               overflowY: "scroll",
-              width: "10%",
+              width: "auto",
               height: "100%"
             }}
           >
@@ -36,7 +41,7 @@ class Posts extends React.Component {
           <Grid.Column
             style={{
               position: "relative",
-              width: "90%",
+              flexGrow: "100",
               height: "100%"
             }}
           >

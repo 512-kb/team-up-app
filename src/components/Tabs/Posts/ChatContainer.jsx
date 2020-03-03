@@ -44,10 +44,12 @@ class ChatContainer extends Component {
     }
     return state;
   };
+
   scrollToBottom = () => {
     let container = document.getElementById("chatContainer");
     container.scrollTop = container.scrollHeight;
   };
+
   render() {
     return (
       <Segment

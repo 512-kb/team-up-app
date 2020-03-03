@@ -4,61 +4,91 @@ import _ from "lodash";
 const loginReducer = (user = { username: false }, action) => {
   const userAlreadyLoggedIn = JSON.parse(sessionStorage.getItem("user"));
   if (userAlreadyLoggedIn) return userAlreadyLoggedIn;
-  if (action.type === "LOGIN_USER" || action.type === "REGISTER_USER") {
-    return action.payload;
+  switch (action.type) {
+    case "LOGOUT":
+      return { username: false };
+    case "LOGIN_USER":
+    case "REGISTER_USER":
+      return action.payload;
+    default:
+      return user;
   }
-  if (action.type === "LOGOUT") {
-    return { username: false };
-  }
-  return user;
 };
 
-const activeTabReducer = (activeTab = "POSTS", action) =>
-  action.type === "LOGOUT"
-    ? "POSTS"
-    : action.type === "SWITCH_TAB"
-    ? action.payload
-    : activeTab;
+const activeTabReducer = (activeTab = "POSTS", action) => {
+  switch (action.type) {
+    case "LOGOUT":
+      return "POSTS";
+    case "SWITCH_TAB":
+      return action.payload;
+    default:
+      return activeTab;
+  }
+};
 
 const activeChannelReducer = (
   activeChannel = { _id: false },
   { type, payload }
 ) => {
-  if (type === "LOAD_USER_CHANNELS" || type === "CREATE_CHANNEL")
-    return payload.length < 1 ? activeChannel : payload[0];
-
-  return type === "SWITCH_CHANNEL" ? payload : activeChannel;
+  switch (type) {
+    case "LOGOUT":
+      return { _id: false };
+    case "LOAD_USER_CHANNELS":
+    case "CREATE_CHANNEL":
+      return payload.length < 1 ? activeChannel : payload[0];
+    case "SWITCH_CHANNEL":
+      return payload;
+    default:
+      return activeChannel;
+  }
 };
 
 const userChannelsReducer = (channels = [], action) => {
-  return action.type === "LOAD_USER_CHANNELS" ||
-    action.type === "CREATE_CHANNEL"
-    ? action.payload
-    : channels;
+  switch (action.type) {
+    case "LOGOUT":
+      return [];
+    case "LOAD_USER_CHANNELS":
+    case "CREATE_CHANNEL":
+      return action.payload;
+    default:
+      return channels;
+  }
 };
 
 const userPostsReducer = (posts = [], action) => {
-  if (action.type === "SWITCH_CHANNEL" || action.type === "LOGOUT") return [];
-  if (action.type === "NEW_POST")
-    return [
-      //...(posts.length > 30 ? posts.filter((p, i) => i !== 0) : posts),
-      ...posts,
-      action.payload
-    ];
-
-  if (action.type === "LOAD_USER_POSTS") return [...action.payload, ...posts];
-  return posts;
+  switch (action.type) {
+    case "LOGOUT":
+    case "SWITCH_CHANNEL":
+      return [];
+    case "NEW_POST":
+      return [...posts, action.payload];
+    case "LOAD_USER_POSTS":
+      return [...action.payload, ...posts];
+    default:
+      return posts;
+  }
 };
 
 const userInvitesReducer = (invites = [], action) => {
-  return action.type === "LOAD_USER_INVITES" ? action.payload : invites;
+  switch (action.type) {
+    case "LOGOUT":
+      return [];
+    case "LOAD_USER_INVITES":
+      return action.payload;
+    default:
+      return invites;
+  }
 };
 
 const top5Reducer = (top5 = {}, { type, payload }) => {
-  if (type === "FETCH_TOP5") {
-    return _.assign(top5, { [payload.entity]: payload.data });
+  switch (type) {
+    case "LOGOUT":
+      return {};
+    case "FETCH_TOP5":
+      return _.assign(top5, { [payload.entity]: payload.data });
+    default:
+      return top5;
   }
-  return top5;
 };
 
 export default combineReducers({
