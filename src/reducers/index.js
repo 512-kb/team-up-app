@@ -92,10 +92,14 @@ const top5Reducer = (top5 = {}, { type, payload }) => {
 };
 
 const pageNoReducer = (page = 0, { type }) => {
-  if (type === "LOAD_USER_POSTS") {
-    return ++page;
+  switch (type) {
+    case "LOGOUT":
+      return 0;
+    case "LOAD_USER_POSTS":
+      return ++page;
+    default:
+      return page;
   }
-  return page;
 };
 
 export default combineReducers({
