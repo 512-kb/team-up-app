@@ -19,15 +19,14 @@ class ChatContainer extends Component {
       if (container.scrollTop === 0) {
         socket.emit(
           "fetch_old_posts",
-          { channel_id: this.props.activeChannel._id, page: this.props.page },
+          {
+            channel_id: this.props.activeChannel._id,
+            skip: this.props.posts.length
+          },
           this.props.loadPosts
         );
       }
     };
-  };
-
-  componentDidUpdate = prevprops => {
-    if (prevprops.page === this.props.page) this.scrollToBottom();
   };
 
   static getDerivedStateFromProps = (props, state) => {
@@ -40,7 +39,7 @@ class ChatContainer extends Component {
         props.activeChannel._id,
         props.loadPosts
       );
-      return { activeChannel: props.activeChannel, page: 1 };
+      return { activeChannel: props.activeChannel };
     }
     return state;
   };
@@ -90,8 +89,8 @@ const createPost = (post, i) => {
   );
 };
 
-const getActiveChannel = ({ activeChannel, posts, user, page }) => {
-  return { activeChannel, posts, user, page };
+const getActiveChannel = ({ activeChannel, posts, user }) => {
+  return { activeChannel, posts, user };
 };
 
 export default connect(getActiveChannel, { updatePosts, loadPosts })(

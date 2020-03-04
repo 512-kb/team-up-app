@@ -58,6 +58,7 @@ const userChannelsReducer = (channels = [], action) => {
 const userPostsReducer = (posts = [], action) => {
   switch (action.type) {
     case "LOGOUT":
+    case "SWITCH_TAB":
     case "SWITCH_CHANNEL":
       return [];
     case "NEW_POST":
@@ -91,17 +92,6 @@ const top5Reducer = (top5 = {}, { type, payload }) => {
   }
 };
 
-const pageNoReducer = (page = 0, { type }) => {
-  switch (type) {
-    case "LOGOUT":
-      return 0;
-    case "LOAD_USER_POSTS":
-      return ++page;
-    default:
-      return page;
-  }
-};
-
 export default combineReducers({
   user: loginReducer,
   channels: userChannelsReducer,
@@ -109,6 +99,5 @@ export default combineReducers({
   invites: userInvitesReducer,
   top5: top5Reducer,
   activeTab: activeTabReducer,
-  activeChannel: activeChannelReducer,
-  page: pageNoReducer
+  activeChannel: activeChannelReducer
 });
