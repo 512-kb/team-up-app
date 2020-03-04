@@ -9,13 +9,10 @@ class ChatContainer extends Component {
   state = { activeChannel: false };
 
   componentDidMount = () => {
-    socket.on("new_post_braodcast", obj => {
-      this.props.updatePosts(obj);
-      this.scrollToBottom();
-    });
-
     let container = document.getElementById("chatContainer");
     container.onscroll = () => {
+      // console.clear();
+      //   console.log(container.scrollTop, container.scrollHeight);
       if (container.scrollTop === 0) {
         socket.emit(
           "fetch_old_posts",
@@ -27,8 +24,23 @@ class ChatContainer extends Component {
         );
       }
     };
+    socket.on("new_post_braodcast", obj => {
+      this.props.updatePosts(obj);
+      if (container.scrollHeight) container.scrollTop = container.scrollHeight;
+    });
   };
 
+  componentDidUpdate = prev => {
+    let container = document.getElementById("chatContainer"),
+      prevH = prev.posts.length,
+      currentH = this.props.posts.length;
+    if (prevH < currentH) {
+      if (prevH < 1) container.scrollTop = container.scrollHeight;
+      else
+        container.scrollTop =
+          (container.scrollHeight * (currentH - prevH)) / currentH;
+    }
+  };
   static getDerivedStateFromProps = (props, state) => {
     if (
       props.activeChannel &&
@@ -42,11 +54,6 @@ class ChatContainer extends Component {
       return { activeChannel: props.activeChannel };
     }
     return state;
-  };
-
-  scrollToBottom = () => {
-    let container = document.getElementById("chatContainer");
-    if (container.scrollHeight) container.scrollTop = container.scrollHeight;
   };
 
   render() {
