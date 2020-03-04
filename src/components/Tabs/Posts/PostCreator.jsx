@@ -15,7 +15,10 @@ class PostForm extends Component {
 
   handleChange = (e, { name, value }) => {
     this.setState({
-      [name]: name === "content" ? value.replace(/\s\s+/g, " ") : value
+      [name]:
+        name === "content"
+          ? value.replace(/[/^ *$/]{2,}/g, " ").replace(/^\s*[\r\n]/gm, "")
+          : value
     });
   };
 

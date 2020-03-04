@@ -77,7 +77,7 @@ class ChatContainer extends Component {
 
 const createPost = (post, i) => {
   return (
-    <Segment key={i}>
+    <Segment style={{ wordWrap: "break-word" }} key={i}>
       <Feed.User>
         <b style={{ marginRight: "1%", fontSize: "1.1rem" }}>{post.username}</b>
       </Feed.User>
@@ -91,9 +91,19 @@ const createPost = (post, i) => {
           </Label>
         ))}
       </span>
-      <Feed.Extra text>{post.content}</Feed.Extra>
+      <br />
+      {replaceBreaklines(post.content.split("\n"))}
     </Segment>
   );
+};
+
+const replaceBreaklines = arr => {
+  let result = [];
+  arr.forEach(str => {
+    result = result.concat([str, <br />]);
+  });
+  result.pop();
+  return result;
 };
 
 const getActiveChannel = ({ activeChannel, posts, user }) => {
