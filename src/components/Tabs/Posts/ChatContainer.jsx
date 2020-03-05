@@ -38,7 +38,7 @@ class ChatContainer extends Component {
       if (prevH < 1) container.scrollTop = container.scrollHeight;
       else
         container.scrollTop =
-          -50 + (container.scrollHeight * (currentH - prevH)) / currentH;
+          1 + (container.scrollHeight * (currentH - prevH)) / currentH;
     }
   };
   static getDerivedStateFromProps = (props, state) => {

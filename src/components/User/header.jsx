@@ -12,10 +12,9 @@ class Head extends React.Component {
   };
   render() {
     return (
-      <Segment style={{ height: "10%" }} clearing>
+      <Segment style={{ height: "auto" }} clearing>
         <Header as="h2" floated="left">
           <Image
-            style={{ height: "100%" }}
             circular
             src="https://react.semantic-ui.com/images/avatar/large/patrick.png"
           />
