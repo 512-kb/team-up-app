@@ -63,7 +63,7 @@ class ChatContainer extends Component {
         style={{
           position: "relative",
           overflowY: "scroll",
-          scrollbehaviour: "smooth",
+          scrollBehavior: "smooth",
           height: "70%",
           marginBottom: "0",
           background: "#D0D0D0"
