@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 
 class Entity extends React.Component {
   componentDidMount = () => {
-    this.props.loadTop5(this.props.name);
+    this.props.loadTop5(this.props.name, {});
   };
   createList = arr => {
     return (
