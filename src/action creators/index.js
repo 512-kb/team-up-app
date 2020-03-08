@@ -49,8 +49,10 @@ export const loadInvites = username => async dispatch => {
   });
 };
 
-export const loadTop5 = entity => async dispatch => {
-  const data = (await axios.get("/top5", { params: { entity } })).data;
+export const loadTop5 = (entity, filter) => async dispatch => {
+  filter =
+    filter.$gte || filter.$lte ? JSON.stringify({ created: filter }) : {};
+  const data = (await axios.get("/top5", { params: { entity, filter } })).data;
   dispatch({ type: "FETCH_TOP5", payload: { entity, data } });
 };
 

@@ -1,11 +1,13 @@
 import React from "react";
 import { Segment } from "semantic-ui-react";
+import Filter from "./filter";
 import Entity from "./EntityTable";
 
 class Top5 extends React.Component {
   render = () => {
     return (
-      <React.Fragment>
+      <>
+        <Filter />
         <Segment.Group horizontal>
           <Entity name="users" />
           <Entity name="channels" />
@@ -14,7 +16,7 @@ class Top5 extends React.Component {
           <Entity name="regions" />
           <Entity name="tags" />
         </Segment.Group>
-      </React.Fragment>
+      </>
     );
   };
 }
