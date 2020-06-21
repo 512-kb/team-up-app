@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { TextArea, Segment, Dropdown, Button } from "semantic-ui-react";
 import { connect } from "react-redux";
 import _ from "lodash";
-import socket from "../../../sockets";
+import socket from "../../../apis/sockets";
 
 const contentCSS = {
   position: "relative",
@@ -61,7 +61,7 @@ class PostForm extends Component {
           multiple
           selection
           value={this.state.tags}
-          options={this.props.activeChannel.tags.map(tag => {
+          options={this.props.activeChannel.tags.map((tag) => {
             return { key: tag, text: tag, value: tag };
           })}
           onChange={this.handleChange}

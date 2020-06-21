@@ -3,7 +3,7 @@ import { Segment, Feed, Label } from "semantic-ui-react";
 import moment from "moment";
 import { connect } from "react-redux";
 import { updatePosts, loadPosts } from "../../../action creators";
-import socket from "../../../sockets";
+import socket from "../../../apis/sockets";
 
 class ChatContainer extends Component {
   state = { activeChannel: false };
@@ -24,13 +24,13 @@ class ChatContainer extends Component {
         );
       }
     };
-    socket.on("new_post_braodcast", obj => {
+    socket.on("new_post_braodcast", (obj) => {
       this.props.updatePosts(obj);
       if (container.scrollHeight) container.scrollTop = container.scrollHeight;
     });
   };
 
-  componentDidUpdate = prev => {
+  componentDidUpdate = (prev) => {
     let container = document.getElementById("chatContainer"),
       prevH = prev.posts.length,
       currentH = this.props.posts.length;
@@ -85,7 +85,7 @@ const createPost = (post, i) => {
         {moment(post.created, "x").format("h:mm A, D-MMM-YYYY")}
       </span>
       <span style={{ float: "right" }}>
-        {post.tags.map(tag => (
+        {post.tags.map((tag) => (
           <Label color="orange" key={tag}>
             {tag}
           </Label>
@@ -97,9 +97,9 @@ const createPost = (post, i) => {
   );
 };
 
-const replaceBreaklines = arr => {
+const replaceBreaklines = (arr) => {
   let result = [];
-  arr.forEach(str => {
+  arr.forEach((str) => {
     result = result.concat([str, <br />]);
   });
   result.pop();
