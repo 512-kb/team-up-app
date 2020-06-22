@@ -75,9 +75,9 @@ class ChatContainer extends Component {
   }
 }
 
-const createPost = (post, i) => {
+const createPost = (post) => {
   return (
-    <Segment style={{ wordWrap: "break-word" }} key={i}>
+    <Segment style={{ wordWrap: "break-word" }} key={post._id}>
       <Feed.User>
         <b style={{ marginRight: "1%", fontSize: "1.1rem" }}>{post.username}</b>
       </Feed.User>
@@ -85,8 +85,8 @@ const createPost = (post, i) => {
         {moment(post.created, "x").format("h:mm A, D-MMM-YYYY")}
       </span>
       <span style={{ float: "right" }}>
-        {post.tags.map((tag) => (
-          <Label color="orange" key={tag}>
+        {post.tags.map((tag, i) => (
+          <Label color="orange" key={i}>
             {tag}
           </Label>
         ))}
@@ -99,8 +99,9 @@ const createPost = (post, i) => {
 
 const replaceBreaklines = (arr) => {
   let result = [];
-  arr.forEach((str) => {
-    result = result.concat([str, <br />]);
+  arr.forEach((str, i) => {
+    result.push(str);
+    result.push(<br key={i} />);
   });
   result.pop();
   return result;
