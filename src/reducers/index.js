@@ -1,14 +1,14 @@
 import { combineReducers } from "redux";
+import { reducer as formReducer } from "redux-form";
 import _ from "lodash";
 
-const loginReducer = (user = { username: false }, action) => {
+const loginReducer = (user = {}, action) => {
   const userAlreadyLoggedIn = JSON.parse(sessionStorage.getItem("user"));
   if (userAlreadyLoggedIn) return userAlreadyLoggedIn;
   switch (action.type) {
     case "LOGOUT":
-      return { username: false };
+      return {};
     case "LOGIN_USER":
-    case "REGISTER_USER":
       return action.payload;
     default:
       return user;
@@ -99,5 +99,6 @@ export default combineReducers({
   invites: userInvitesReducer,
   top5: top5Reducer,
   activeTab: activeTabReducer,
-  activeChannel: activeChannelReducer
+  activeChannel: activeChannelReducer,
+  form: formReducer
 });

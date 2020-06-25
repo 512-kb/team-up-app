@@ -1,69 +1,48 @@
 import React from "react";
-import { Form } from "semantic-ui-react";
+import { Form, Message } from "semantic-ui-react";
 import { connect } from "react-redux";
+import { Field, reduxForm } from "redux-form";
+
 import { loginUser } from "../action creators";
 import history from "../history";
 
 class Login extends React.Component {
-  state = {
-    username: "",
-    password: "",
-    error: { username: false, password: false }
+  state = {};
+  componentDidUpdate = () => {
+    const { user, submitSucceeded } = this.props;
+    if (user._id) {
+      sessionStorage.setItem("user", JSON.stringify(user));
+      history.push("/user");
+    } else if (!this.state.err && submitSucceeded) this.setState({ err: true });
   };
 
-  validate = formValues => {
-    let error = { username: false, password: false };
-    if (!formValues.username) error.username = "Enter the username";
-    if (!formValues.password) error.password = "Enter the password";
-    this.setState({ error });
-    if (error.username || error.password) return false;
-    return true;
-  };
-
-  onSubmit = () => {
-    const formValues = {
-      username: this.state.username,
-      password: this.state.password
-    };
-    if (this.validate(formValues)) {
-      this.props.loginUser(formValues);
-    }
-  };
-
-  handleChange = (e, input) => {
-    return this.setState({ [input.name]: input.value });
+  renderInput = ({ input, type }) => {
+    return (
+      <Form.Input
+        label={input.name[0].toUpperCase() + input.name.slice(1)}
+        type={type}
+        style={{ width: "25vw" }}
+        {...input}
+        required
+        autoComplete={"off"}
+      />
+    );
   };
 
   render = () => {
+    const { loginUser, handleSubmit } = this.props;
     return (
-      <Form>
-        <Form.Group>
-          <Form.Input
-            label="Username"
-            placeholder="Username"
-            name="username"
-            autoComplete="off"
-            onChange={this.handleChange}
-            error={
-              this.state.error.username ? this.state.error.username : undefined
-            }
-          />
-        </Form.Group>
-        <Form.Group>
-          <Form.Input
-            label="Password"
-            placeholder="Password"
-            type="password"
-            name="password"
-            autoComplete="off"
-            onChange={this.handleChange}
-            error={
-              this.state.error.password ? this.state.error.password : undefined
-            }
-          />
-        </Form.Group>
+      <Form error={this.state.err} onSubmit={handleSubmit(loginUser)}>
+        <Field name="username" type="text" component={this.renderInput} />
+        <Field name="password" type="password" component={this.renderInput} />
+        <Message
+          error
+          header="Login Failed"
+          style={{ width: "25vw" }}
+          content="Invalid Username or Password"
+        />
         <br />
-        <Form.Button onClick={this.onSubmit} color="blue">
+        <Form.Button type="submit" color="blue">
           Login
         </Form.Button>
       </Form>
@@ -72,14 +51,11 @@ class Login extends React.Component {
 }
 
 const mapStateToProps = ({ user }) => {
-  if (user.username) {
-    sessionStorage.setItem("user", JSON.stringify(user));
-    history.push("/user");
-  }
-  if (user.msg) {
-    alert(user.msg);
-  }
-  return user;
+  return { user };
 };
 
-export default connect(mapStateToProps, { loginUser })(Login);
+export default connect(mapStateToProps, { loginUser })(
+  reduxForm({
+    form: "login"
+  })(Login)
+);

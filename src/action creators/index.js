@@ -1,46 +1,42 @@
 import axios from "../apis/axios";
 
-export const loginUser = formValues => async dispatch => {
-  const user = await axios.get("/login", {
+export const loginUser = (formValues) => async (dispatch) => {
+  const { data: user } = await axios.get("/login", {
     params: formValues
   });
-  dispatch({ type: "LOGIN_USER", payload: user.data });
+  dispatch({ type: "LOGIN_USER", payload: user });
 };
 
 export const logoutUser = () => {
   return { type: "LOGOUT" };
 };
 
-export const switchTab = tab => {
+export const switchTab = (tab) => {
   return { type: "SWITCH_TAB", payload: tab };
 };
 
-export const switchChannel = channel => {
+export const switchChannel = (channel) => {
   return { type: "SWITCH_CHANNEL", payload: channel };
 };
 
-export const registerUser = formValues => async dispatch => {
-  const user = await axios.post("/register", formValues);
-  dispatch({ type: "REGISTER_USER", payload: user.data });
-};
-
-export const loadChannels = username => async dispatch => {
-  const channels = (await axios.get("/channels", { params: { username } }))
-    .data;
+export const loadChannels = (username) => async (dispatch) => {
+  const { data: channels } = await axios.get("/channels", {
+    params: { username }
+  });
   dispatch({
     type: "LOAD_USER_CHANNELS",
     payload: channels
   });
 };
 
-export const loadPosts = posts => {
+export const loadPosts = (posts) => {
   return {
     type: "LOAD_USER_POSTS",
     payload: posts
   };
 };
 
-export const loadInvites = username => async dispatch => {
+export const loadInvites = (username) => async (dispatch) => {
   const invites = (await axios.get("/invitations", { params: { username } }))
     .data;
   dispatch({
@@ -49,7 +45,7 @@ export const loadInvites = username => async dispatch => {
   });
 };
 
-export const loadTop5 = (entity, filter) => async dispatch => {
+export const loadTop5 = (entity, filter) => async (dispatch) => {
   filter =
     filter.$gte || filter.$lte ? JSON.stringify({ created: filter }) : {};
   const data = (await axios.get("/top5", { params: { entity, filter } })).data;
@@ -62,7 +58,7 @@ export const respondToInvite = (invite_data, isAccepted = true) => async () => {
   return null;
 };
 
-export const createChannel = formValues => async dispatch => {
+export const createChannel = (formValues) => async (dispatch) => {
   const msg = (await axios.post("/channels", formValues)).data.msg;
   alert(msg);
   const channels = (
@@ -71,11 +67,11 @@ export const createChannel = formValues => async dispatch => {
   dispatch({ type: "CREATE_CHANNEL", payload: channels });
 };
 
-export const createInvite = async formValues => {
+export const createInvite = async (formValues) => {
   const res = (await axios.post("/invitations", formValues)).data;
   return res;
 };
 
-export const updatePosts = newPost => {
+export const updatePosts = (newPost) => {
   return { type: "NEW_POST", payload: newPost };
 };
