@@ -30,7 +30,7 @@ class Login extends React.Component {
   };
 
   render = () => {
-    const { loginUser, handleSubmit } = this.props;
+    const { loginUser, handleSubmit, submitting } = this.props;
     return (
       <Form error={this.state.err} onSubmit={handleSubmit(loginUser)}>
         <Field name="username" type="text" component={this.renderInput} />
@@ -42,7 +42,7 @@ class Login extends React.Component {
           content="Invalid Username or Password"
         />
         <br />
-        <Form.Button type="submit" color="blue">
+        <Form.Button loading={submitting} type="submit" color="blue">
           Login
         </Form.Button>
       </Form>

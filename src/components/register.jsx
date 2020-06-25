@@ -72,7 +72,6 @@ class Register extends React.Component {
   };
 
   render = () => {
-    console.log(this.props);
     const { handleSubmit, pristine, reset, submitting } = this.props;
     return (
       <Form onSubmit={handleSubmit(this.onSubmit)}>
