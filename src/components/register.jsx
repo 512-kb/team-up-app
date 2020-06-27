@@ -61,7 +61,10 @@ class Register extends React.Component {
         <Form.Input
           label={input.name[0].toUpperCase() + input.name.slice(1)}
           type={type}
-          error={touched && error ? error : undefined}
+          style={{ width: "25vw" }}
+          error={
+            touched && error ? { content: error, pointing: "left" } : undefined
+          }
           {...input}
           loading={asyncValidating}
           required
