@@ -10,6 +10,7 @@ class Login extends React.Component {
   state = {};
   componentDidUpdate = () => {
     const { user, submitSucceeded } = this.props;
+    //console.log({ user, submitSucceeded });
     if (user._id) {
       sessionStorage.setItem("user", JSON.stringify(user));
       history.push("/user");
