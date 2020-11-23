@@ -62,7 +62,7 @@ const userPostsReducer = (posts = [], action) => {
     case "SWITCH_CHANNEL":
       return [];
     case "NEW_POST":
-      return [...posts, action.payload];
+      return _.unionBy([...posts, ...action.payload], "_id");
     case "LOAD_USER_POSTS":
       return _.unionBy([...action.payload, ...posts], "_id");
     default:
