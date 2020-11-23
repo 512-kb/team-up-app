@@ -11,8 +11,6 @@ class ChatContainer extends Component {
   componentDidMount = () => {
     let container = document.getElementById("chatContainer");
     container.onscroll = () => {
-      // console.clear();
-      //   console.log(container.scrollTop, container.scrollHeight);
       if (container.scrollTop === 0) {
         socket.emit(
           "fetch_old_posts",
