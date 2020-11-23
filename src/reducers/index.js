@@ -64,7 +64,7 @@ const userPostsReducer = (posts = [], action) => {
     case "NEW_POST":
       return [...posts, action.payload];
     case "LOAD_USER_POSTS":
-      return [...action.payload, ...posts];
+      return _.unionBy([...action.payload, ...posts], "_id");
     default:
       return posts;
   }
